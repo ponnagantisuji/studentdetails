@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: suji-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: studentdetails-deployment
+  namespace: suji-ns          # <-- Added namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: studentdetails
+  template:
+    metadata:
+      labels:
+        app: studentdetails
+    spec:
+      containers:
+        - name: studentdetails
+          image: ponnagantisuji/studentdetails:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: studentdetails-service
+  namespace: suji-ns          # <-- Added namespace
+spec:
+  type: NodePort
+  selector:
+    app: studentdetails
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+      nodePort: 30081
