@@ -25,6 +25,21 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
+    <!-- Ensure Maven can resolve plugins from Maven Central if needed -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <!-- Spring Boot Starter Web for REST APIs -->
         <dependency>
@@ -60,6 +75,70 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Docker building is opt-in via the 'docker' profile below -->
+
         </plugins>
     </build>
+
+    <!-- Opt-in profile: activate with -Pdocker to build an image tar in project root -->
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <!-- Jib: create a tar of the image under target/jib-image.tar -->
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>jib-build-tar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>buildTar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <to>
+                                <image>ponnagantisuji/${project.artifactId}:${project.version}</image>
+                            </to>
+                            <container>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                            </container>
+                        </configuration>
+                    </plugin>
+
+                    <!-- After Jib creates target/jib-image.tar, move it to project root as artifact-version.tar -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>move-jib-tar-to-root</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <move file="${project.build.directory}/jib-image.tar"
+                                              tofile="${project.basedir}/${project.artifactId}-${project.version}.tar"
+                                              verbose="true" failonerror="false"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
