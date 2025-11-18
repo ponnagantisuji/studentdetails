@@ -57,3 +57,9 @@ java -jar target/studentdetails-0.0.1-SNAPSHOT.jar
 Notes:
 - First run will download Maven (requires curl/wget/unzip on Unix, PowerShell on Windows).
 - If download fails, install Maven manually or run from an IDE that provides Maven.
+
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
