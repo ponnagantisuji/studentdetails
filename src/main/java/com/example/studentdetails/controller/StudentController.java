@@ -1,7 +1,9 @@
 package com.example.studentdetails.controller;
 
 import com.example.studentdetails.dto.Student;
+import com.example.studentdetails.service.StudentService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +13,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RestController
 @RequestMapping("/students")  // Changed to match requirement /students
 public class StudentController {
-    private final AtomicInteger idGenerator = new AtomicInteger();
-    private final Map<Integer, Student> store = Collections.synchronizedMap(new LinkedHashMap<>());
-
+    @Autowired
+    private StudentService studentService;
     /**
      * GET /students - Return all students
      */
     @GetMapping
     public List<Student> listStudents() {
-        return new ArrayList<>(store.values());
+        return studentService.giveAllStudents();
     }
 
     /**
@@ -27,11 +28,7 @@ public class StudentController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
-        Student student = store.get(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(student);
+        return studentService.getMyStudentById(id);
     }
 
     /**
@@ -41,10 +38,7 @@ public class StudentController {
      */
     @PostMapping
     public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
-        int id = idGenerator.incrementAndGet();
-        student.setId(id);
-        store.put(id, student);
-        return ResponseEntity.status(201).body(student);
+        return studentService.addNewStudent(student);
     }
 
     /**
@@ -54,16 +48,7 @@ public class StudentController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable Integer id, @Valid @RequestBody Student student) {
-        if (!store.containsKey(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Student existingStudent = store.get(id);
-        existingStudent.setName(student.getName());
-        existingStudent.setEmail(student.getEmail());
-        store.put(id, existingStudent);
-
-        return ResponseEntity.ok(existingStudent);
+        return studentService.updateStudentInfo(id, student);
     }
 
     /**
@@ -71,6 +56,6 @@ public class StudentController {
      */
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getAllStudents() {
-        return ResponseEntity.ok(new ArrayList<>(store.values()));
+        return studentService.getAllStudents();
     }
 }
