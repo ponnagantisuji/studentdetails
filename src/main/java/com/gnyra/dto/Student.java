@@ -1,4 +1,4 @@
-package com.example.studentdetails.dto;
+package com.gnyra.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

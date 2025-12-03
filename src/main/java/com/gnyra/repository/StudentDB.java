@@ -1,6 +1,6 @@
-package com.example.studentdetails.repository;
+package com.gnyra.repository;
 
-import com.example.studentdetails.dto.Student;
+import com.gnyra.dto.Student;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

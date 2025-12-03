@@ -1,7 +1,7 @@
-package com.example.studentdetails.controller;
+package com.gnyra.controller;
 
-import com.example.studentdetails.dto.Student;
-import com.example.studentdetails.service.StudentService;
+import com.gnyra.dto.Student;
+import com.gnyra.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/students")

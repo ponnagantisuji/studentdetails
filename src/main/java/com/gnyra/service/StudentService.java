@@ -1,7 +1,7 @@
-package com.example.studentdetails.service;
+package com.gnyra.service;
 
-import com.example.studentdetails.dto.Student;
-import com.example.studentdetails.repository.StudentDB;
+import com.gnyra.dto.Student;
+import com.gnyra.repository.StudentDB;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

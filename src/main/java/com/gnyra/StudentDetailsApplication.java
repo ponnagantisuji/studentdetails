@@ -1,4 +1,4 @@
-package com.example.studentdetails;
+package com.gnyra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
