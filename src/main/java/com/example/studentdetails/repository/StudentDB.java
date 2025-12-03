@@ -2,6 +2,7 @@ package com.example.studentdetails.repository;
 
 import com.example.studentdetails.dto.Student;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
+@Slf4j
 public class StudentDB {
     private final AtomicInteger idGenerator = new AtomicInteger();
     public final Map<Integer, Student> studentInfoDb = Collections.synchronizedMap(new LinkedHashMap<>());
@@ -19,6 +21,7 @@ public class StudentDB {
         int id = idGenerator.incrementAndGet();
         student.setId(id);
         studentInfoDb.put(id, student);
+        log.info("Stored student in DB: {}", student);
         return ResponseEntity.status(201).body(student);
     }
 

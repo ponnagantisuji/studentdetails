@@ -3,6 +3,7 @@ package com.example.studentdetails.service;
 import com.example.studentdetails.dto.Student;
 import com.example.studentdetails.repository.StudentDB;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class StudentService {
 
     @Autowired
@@ -29,6 +31,7 @@ public class StudentService {
     }
 
     public ResponseEntity<Student> addNewStudent(@Valid Student student) {
+        log.info("Adding new student: {}", student);
         return studentDB.storeStudentInfo(student);
     }
 

@@ -3,6 +3,7 @@ package com.example.studentdetails.controller;
 import com.example.studentdetails.dto.Student;
 import com.example.studentdetails.service.StudentService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
-@RequestMapping("/students")  // Changed to match requirement /students
+@RequestMapping("/students")
+@Slf4j
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -38,6 +40,7 @@ public class StudentController {
      */
     @PostMapping
     public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
+        log.info("Received request to create student: {}", student);
         return studentService.addNewStudent(student);
     }
 
