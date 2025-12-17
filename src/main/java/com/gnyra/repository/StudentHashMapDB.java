@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j
-public class StudentDB {
+public class StudentHashMapDB {
     private final AtomicInteger idGenerator = new AtomicInteger();
     public final Map<Integer, Student> studentInfoDb = Collections.synchronizedMap(new LinkedHashMap<>());
 

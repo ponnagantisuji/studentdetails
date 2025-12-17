@@ -1,7 +1,7 @@
 package com.gnyra.service;
 
 import com.gnyra.dto.Student;
-import com.gnyra.repository.StudentDB;
+import com.gnyra.repository.StudentHashMapDB;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +13,17 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class StudentService {
+public class StudentServiceV1 {
 
     @Autowired
-    private StudentDB studentDB;
+    private StudentHashMapDB studentHashMapDB;
 
     public ArrayList<Student> giveAllStudents() {
-        return new ArrayList<>(studentDB.studentInfoDb.values());
+        return new ArrayList<>(studentHashMapDB.studentInfoDb.values());
     }
 
     public ResponseEntity<Student> getMyStudentById(Integer id) {
-        Student student = studentDB.studentInfoDb.get(id);
+        Student student = studentHashMapDB.studentInfoDb.get(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
@@ -32,14 +32,14 @@ public class StudentService {
 
     public ResponseEntity<Student> addNewStudent(@Valid Student student) {
         log.info("Adding new student: {}", student);
-        return studentDB.storeStudentInfo(student);
+        return studentHashMapDB.storeStudentInfo(student);
     }
 
     public ResponseEntity<Student> updateStudentInfo(Integer id, @Valid Student student) {
-        return studentDB.updateStudentInDb(id, student);
+        return studentHashMapDB.updateStudentInDb(id, student);
     }
 
     public ResponseEntity<List<Student>> getAllStudents() {
-        return ResponseEntity.ok(new ArrayList<>(studentDB.studentInfoDb.values()));
+        return ResponseEntity.ok(new ArrayList<>(studentHashMapDB.studentInfoDb.values()));
     }
 }
