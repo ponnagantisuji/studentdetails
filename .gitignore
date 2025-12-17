@@ -32,3 +32,4 @@ bin/
 /.mvn/
 /target/
 *.iml
+*.tar

@@ -1,7 +1,7 @@
 package com.gnyra.controller;
 
 import com.gnyra.dto.Student;
-import com.gnyra.service.StudentServiceV1;
+import com.gnyra.service.StudentServiceV2;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/students/v1")
+@RequestMapping("/students/v2")
 @Slf4j
-public class StudentController {
+public class StudentControllerV2 {
     @Autowired
-    private StudentServiceV1 studentService;
+    private StudentServiceV2 studentService;
 
     /**
-     * GET /students/v1 - Return all students
+     * GET /students/v2 - Return all students
      */
     @GetMapping
     public List<Student> listStudents() {
@@ -26,7 +26,7 @@ public class StudentController {
     }
 
     /**
-     * GET /students/v1/{id} - Return a single student by id
+     * GET /students/v2/{id} - Return a single student by id
      */
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     /**
-     * POST /students/v1 - Add a new student
+     * POST /students/v2 - Add a new student
      * Example request body:
      * { "name": "Alice Smith", "email": "alice@example.com" }
      */
@@ -45,7 +45,7 @@ public class StudentController {
     }
 
     /**
-     * PUT /students/v1/{id} - Update student's name & email
+     * PUT /students/v2/{id} - Update student's name & email
      * Example request body:
      * { "name": "Alice Smith", "email": "alicesmith@example.com" }
      */
@@ -55,7 +55,7 @@ public class StudentController {
     }
 
     /**
-     * GET /students/v1/all - Return all students (alias for /students/v1)
+     * GET /students/v2/all - Return all students (alias for /students/v2)
      */
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getAllStudents() {
