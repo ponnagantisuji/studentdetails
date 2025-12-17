@@ -1,4 +1,4 @@
-# Studentdetails - Simple Spring Boot app 8888888888888
+# Studentdetails - Simple Spring Boot app 
 
 This is a minimal Spring Boot application with a Student model and a StudentController exposing a simple POST API to create students.
 
@@ -133,3 +133,5 @@ Forwarding from [::1]:8081 -> 8081
 Handling connection for 8081
 Handling connection for 8081
 you have to keep port forward running to maintain the tunnel and keep window open.
+
+---------------------------------------------------------------------------------------
